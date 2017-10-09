@@ -1517,8 +1517,8 @@ void CClient::ProcessServerPacket(CNetChunk *pPacket)
 
 						str_append(aUrl, aEscaped, sizeof(aUrl));
 
-						m_pMapdownloadTask = new CFetchTask(true, UseDDNetCA);
-						Fetcher()->QueueAdd(m_pMapdownloadTask, aUrl, m_aMapdownloadFilename, IStorage::TYPE_SAVE);
+						m_pMapdownloadTask = new CFetchTask;
+						Fetcher()->FetchFile(m_pMapdownloadTask, aUrl, m_aMapdownloadFilename, IStorage::TYPE_SAVE, UseDDNetCA, true);
 					}
 					else
 						SendMapRequest();
@@ -2884,6 +2884,7 @@ void CClient::Run()
 	GameClient()->OnShutdown();
 	Disconnect();
 
+	delete m_pEditor;
 	m_pGraphics->Shutdown();
 
 	// shutdown SDL
@@ -3492,7 +3493,7 @@ int main(int argc, const char **argv) // ignore_convention
 		RegisterFail = RegisterFail || !pKernel->RegisterInterface(static_cast<IEngineMasterServer*>(pEngineMasterServer)); // register as both
 		RegisterFail = RegisterFail || !pKernel->RegisterInterface(static_cast<IMasterServer*>(pEngineMasterServer), false);
 
-		RegisterFail = RegisterFail || !pKernel->RegisterInterface(CreateEditor());
+		RegisterFail = RegisterFail || !pKernel->RegisterInterface(CreateEditor(), false);
 		RegisterFail = RegisterFail || !pKernel->RegisterInterface(CreateGameClient(), false);
 		RegisterFail = RegisterFail || !pKernel->RegisterInterface(pStorage);
 
@@ -3643,8 +3644,8 @@ void CClient::RequestDDNetInfo()
 		str_append(aUrl, aEscaped, sizeof(aUrl));
 	}
 
-	m_pDDNetInfoTask = new CFetchTask(true, /*UseDDNetCA*/ true);
-	Fetcher()->QueueAdd(m_pDDNetInfoTask, aUrl, "ddnet-info.json.tmp", IStorage::TYPE_SAVE);
+	m_pDDNetInfoTask = new CFetchTask;
+	Fetcher()->FetchFile(m_pDDNetInfoTask, aUrl, "ddnet-info.json.tmp", IStorage::TYPE_SAVE, true, true);
 }
 
 int CClient::GetPredictionTime()
