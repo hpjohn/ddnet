@@ -54,6 +54,7 @@ class CClient : public IClient, public CDemoPlayer::IListener
 	// needed interfaces
 	IEngine *m_pEngine;
 	IEditor *m_pEditor;
+	IBall *m_pBall;
 	IEngineInput *m_pInput;
 	IEngineGraphics *m_pGraphics;
 	IEngineSound *m_pSound;
@@ -99,6 +100,7 @@ class CClient : public IClient, public CDemoPlayer::IListener
 	bool m_AutoStatScreenshotRecycle;
 	bool m_AutoCSVRecycle;
 	bool m_EditorActive;
+	bool m_BallActive;
 	bool m_SoundInitFailed;
 	bool m_ResortServerBrowser;
 

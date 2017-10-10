@@ -95,6 +95,7 @@ class CGameClient : public IGameClient
 	class IDemoPlayer *m_pDemoPlayer;
 	class IServerBrowser *m_pServerBrowser;
 	class IEditor *m_pEditor;
+	class IBall *m_pBall;
 	class IFriends *m_pFriends;
 	class IFriends *m_pFoes;
 	class IUpdater *m_pUpdater;
@@ -141,6 +142,7 @@ public:
 	class CLayers *Layers() { return &m_Layers; };
 	class CCollision *Collision() { return &m_Collision; };
 	class IEditor *Editor() { return m_pEditor; }
+	class IBall *Ball() { return m_pBall; }
 	class IFriends *Friends() { return m_pFriends; }
 	class IFriends *Foes() { return m_pFoes; }
 	class IUpdater *Updater() { return m_pUpdater; }

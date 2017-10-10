@@ -48,7 +48,7 @@ void CJobPool::WorkerThread(void *pUser)
 		lock_unlock(pPool->m_Lock);
 
 		// do the job if we have one
-		if(pJob)
+		if(pJob && pJob->m_Status > -3)
 		{
 			pJob->m_Status = CJob::STATE_RUNNING;
 			pJob->m_Result = pJob->m_pfnFunc(pJob->m_pFuncData);
